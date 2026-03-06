@@ -647,10 +647,6 @@ def get_squad_data(nickname: str) -> tuple[pd.DataFrame | None, pd.DataFrame | N
 
     # 1) 프로필 페이지 스크래핑 → nexon_sn, char_id 획득
     resp = session.get(_PROFILE_URL, params={"strCharacterName": nickname}, headers=_HEADERS)
-    # ── 임시 디버그 ──────────────────────────────────────────
-    st.write("status_code:", resp.status_code)
-    st.code(resp.text[:3000], language="html")
-    # ─────────────────────────────────────────────────────────
     m = _PROFILE_PATTERN.search(resp.text)
     if not m:
         return None, None, None
