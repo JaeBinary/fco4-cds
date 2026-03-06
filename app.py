@@ -14,9 +14,6 @@ import requests
 import streamlit as st
 import streamlit.components.v1 as components
 from bs4 import BeautifulSoup, NavigableString
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # ==========================================
 # 페이지 설정
@@ -30,9 +27,9 @@ st.set_page_config(
 # ==========================================
 # 상수
 # ==========================================
-_PROFILE_URL   = st.secrets.get("PROFILE_URL") or os.environ.get("PROFILE_URL")
-_SQUAD_API_URL = st.secrets.get("SQUAD_API_URL") or os.environ.get("SQUAD_API_URL")
-_THUMB_BASE    = st.secrets.get("THUMB_BASE_URL") or os.environ.get("THUMB_BASE_URL")
+_PROFILE_URL   = st.secrets["PROFILE_URL"]
+_SQUAD_API_URL = st.secrets["SQUAD_API_URL"]
+_THUMB_BASE    = st.secrets["THUMB_BASE_URL"]
 
 # 프로필 페이지에서 nexon_sn, char_id를 추출하는 정규식
 _PROFILE_PATTERN = re.compile(
