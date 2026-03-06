@@ -4,6 +4,10 @@ A Streamlit web app that retrieves and visualizes the representative squad of an
 
 **[Live Demo →](https://fco4-cds.streamlit.app)**
 
+## Preview
+
+![Preview](img/preview.png)
+
 ---
 
 ## Features
