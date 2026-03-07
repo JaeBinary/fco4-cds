@@ -35,6 +35,27 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+components.html("""
+<script>
+(function() {
+    var p = window.parent;
+    if (p.__ga4_injected) return;
+    p.__ga4_injected = true;
+
+    var s = p.document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-50P0LVTVQZ';
+    p.document.head.appendChild(s);
+
+    p.dataLayer = p.dataLayer || [];
+    function gtag(){ p.dataLayer.push(arguments); }
+    p.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-50P0LVTVQZ');
+})();
+</script>
+""", height=0)
+
 # ==========================================
 # 상수
 # ==========================================
