@@ -7,6 +7,7 @@ import json
 import os
 import random
 import re
+import uuid
 from datetime import date, datetime
 
 import pandas as pd
@@ -71,6 +72,34 @@ _POS_XY = {
     "RF":  (65, 95), "CF":  (50, 95), "LF":  (35, 95),
     "RS": (65, 105), "ST":  (50, 105), "LS":  (35, 105),
 }
+
+# ==========================================
+# GA4 Measurement Protocol 로그
+# ==========================================
+def _log_search(nickname: str, found: bool):
+    try:
+        if "ga_client_id" not in st.session_state:
+            st.session_state.ga_client_id = str(uuid.uuid4())
+        requests.post(
+            "https://www.google-analytics.com/mp/collect",
+            params={
+                "measurement_id": st.secrets["GA4_MEASUREMENT_ID"],
+                "api_secret":     st.secrets["GA4_API_SECRET"],
+            },
+            json={
+                "client_id": st.session_state.ga_client_id,
+                "events": [{
+                    "name": "search_nickname",
+                    "params": {
+                        "nickname": nickname,
+                        "found":    str(found),
+                    }
+                }]
+            },
+            timeout=2,
+        )
+    except Exception:
+        pass
 
 # 스크래핑용 공통 요청 헤더
 _HEADERS = {
@@ -1325,6 +1354,7 @@ if st.session_state.do_search and nickname:
     st.session_state.do_search = False
     with st.spinner(f"'{nickname}' 구단주 스쿼드 조회 중..."):
         df_st, df_sub, squad_name = get_squad_data(nickname)
+    _log_search(nickname, df_st is not None)
 
     if df_st is None:
         st.error("❌ 존재하지 않는 구단주이거나 대표 스쿼드가 없습니다.")
