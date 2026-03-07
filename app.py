@@ -24,6 +24,14 @@ st.set_page_config(
     layout="wide",
 )
 
+st.markdown("""
+    <style>
+    div[data-testid="stToolbarActions"] { display: none !important; }
+    button[data-testid="manage-app-button"] { display: none !important; }
+    div[data-testid="stMainMenu"] { display: none !important; }
+    </style>
+""", unsafe_allow_html=True)
+
 # ==========================================
 # 상수
 # ==========================================
