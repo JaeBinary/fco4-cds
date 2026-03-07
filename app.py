@@ -16,36 +16,6 @@ import streamlit.components.v1 as components
 from bs4 import BeautifulSoup, NavigableString
 
 # ==========================================
-# Google Tag Manager — index.html 패치
-# ==========================================
-_GTM_ID = "GTM-59VPBW5K"
-_index_path = os.path.join(os.path.dirname(st.__file__), "static", "index.html")
-
-with open(_index_path, "r", encoding="utf-8") as _f:
-    _html = _f.read()
-
-if _GTM_ID not in _html:
-    _head_script = (
-        f"<!-- Google Tag Manager -->"
-        f"<script>(function(w,d,s,l,i){{w[l]=w[l]||[];w[l].push({{'gtm.start':"
-        f"new Date().getTime(),event:'gtm.js'}});var f=d.getElementsByTagName(s)[0],"
-        f"j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src="
-        f"'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);"
-        f"}})(window,document,'script','dataLayer','{_GTM_ID}');</script>"
-        f"<!-- End Google Tag Manager -->"
-    )
-    _body_script = (
-        f"<!-- Google Tag Manager (noscript) -->"
-        f"<noscript><iframe src='https://www.googletagmanager.com/ns.html?id={_GTM_ID}'"
-        f" height='0' width='0' style='display:none;visibility:hidden'></iframe></noscript>"
-        f"<!-- End Google Tag Manager (noscript) -->"
-    )
-    _html = _html.replace("<head>", f"<head>{_head_script}", 1)
-    _html = _html.replace("<body>", f"<body>{_body_script}", 1)
-    with open(_index_path, "w", encoding="utf-8") as _f:
-        _f.write(_html)
-
-# ==========================================
 # 페이지 설정
 # ==========================================
 st.set_page_config(
@@ -54,12 +24,12 @@ st.set_page_config(
     layout="wide",
 )
 
-
 st.markdown("""
     <style>
     div[data-testid="stToolbarActions"] { display: none !important; }
-    button[data-testid="manage-app-button"],
-    ._terminalButton_rix23_138 { display: none !important; }
+    button[data-testid="manage-app-button"] { display: none !important; }
+    [data-testid="manage-app-button"] { display: none !important; }
+    footer { display: none !important; }
     div[data-testid="stMainMenu"] { display: none !important; }
     </style>
 """, unsafe_allow_html=True)
